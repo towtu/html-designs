@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiekoi Store QR Template</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Nunito from your store -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Force browsers to print backgrounds and colors exactly as they appear */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        /* Set the print size to a small card/square format instead of full page */
+        @page {
+            size: 200mm 200mm; /* Adjust these values to fit your desired small square/sticker size */
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #fef6e4 !important; /* Warm cream background */
+            margin: 0;
+            padding: 0;
+            color: #0f0e17;
+        }
+
+        .font-fredoka {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Chiekoi Store Brutalism Styles */
+        .chiekoi-border {
+            border: 4px solid #0f0e17;
+        }
+        .chiekoi-border-sm {
+            border: 3px solid #0f0e17;
+        }
+        .chiekoi-shadow {
+            box-shadow: 8px 8px 0px 0px #0f0e17;
+        }
+        .chiekoi-shadow-sm {
+            box-shadow: 4px 4px 0px 0px #0f0e17;
+        }
+        .chiekoi-text-shadow {
+            text-shadow: 3px 3px 0px #0f0e17;
+        }
+
+        /* Wavy SVG Divider */
+        .wave {
+            position: absolute;
+            bottom: -2px; /* Pull down slightly to hide seam */
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 30px;
+        }
+        .wave .shape-fill { fill: #fffffe; } /* Matches the card background */
+
+        /* Print Specific Adjustments */
+        @media print {
+            body {
+                height: 100vh;
+                width: 100vw;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #fef6e4 !important;
+                /* Add a tiny padding so it doesn't touch the literal edge of the cut paper */
+                padding: 5mm; 
+                box-sizing: border-box;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .chiekoi-shadow {
+                box-shadow: 6px 6px 0px 0px #0f0e17 !important;
+            }
+            .chiekoi-shadow-sm {
+                box-shadow: 3px 3px 0px 0px #0f0e17 !important;
+            }
+            /* Make sure the card scales nicely to fit the small page size */
+            .main-card {
+                transform: scale(0.9);
+                transform-origin: center center;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative select-none overflow-hidden p-6">
+
+    <!-- Main Card Container -->
+    <div class="main-card relative z-10 w-full max-w-[420px] bg-[#fffffe] chiekoi-border chiekoi-shadow rounded-[2rem] flex flex-col overflow-hidden">
+        
+        <!-- Header Section (Matches your store header) -->
+        <div class="relative bg-[#ff8906] pt-8 pb-10 px-4 text-center border-b-[4px] border-[#0f0e17]">
+            <h1 class="font-fredoka text-[32px] font-bold text-[#fffffe] chiekoi-text-shadow m-0 tracking-wide">
+                🏪 Chiekoi Store
+            </h1>
+            
+            <!-- Wavy Divider at the bottom of the orange header -->
+            <div class="wave">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.32,201.5,114.24,242.47,110.16,282.89,95.6,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Body Section -->
+        <div class="p-8 flex flex-col items-center bg-[#fffffe]">
+            
+            <!-- Scan Me Badge (Coral Red) -->
+            <div class="bg-[#f25f4c] text-white font-fredoka text-xl font-bold px-8 py-2 rounded-xl chiekoi-border-sm chiekoi-shadow-sm transform -rotate-2 mb-6 -mt-4 relative z-20">
+                PRICE LIST & MENU 📋
+            </div>
+
+            <!-- QR Code Section -->
+            <div class="relative w-64 h-64 bg-white rounded-2xl chiekoi-border chiekoi-shadow-sm flex items-center justify-center mb-6 overflow-hidden z-20 p-2">
+                
+                <!-- YOUR UPLOADED IMAGE (Gift Box QR) -->
+                <!-- TO MOVE QR CODE: Change "left: 0px;" below. (e.g. left: -10px; to move left, left: 10px; to move right) -->
+                <img src="frame.png" 
+                     alt="Store Price List QR Code" 
+                     class="w-full h-full object-contain relative"
+                     style="object-position: center 26%; transform: scale(2.1); top: -100px;"
+                     onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=ChiekoiStoreMenu&color=000000&bgcolor=FFFFFF';">
+            </div>
+
+            <!-- Details Container (Cream Background) -->
+            <div class="w-full bg-[#fef6e4] chiekoi-border chiekoi-shadow-sm rounded-2xl p-6 flex flex-col gap-3 relative text-center">
+                
+                <!-- Decorative Pin/Dot -->
+                <div class="absolute -top-3 -right-3 w-6 h-6 bg-[#e53170] rounded-full chiekoi-border-sm"></div>
+
+                <!-- Title -->
+                <h2 class="text-[22px] font-fredoka font-bold text-[#0f0e17] leading-tight">
+                    Check what's in store! ✨
+                </h2>
+
+                <!-- Divider -->
+                <div class="w-full border-t-[3px] border-dashed border-[#0f0e17] opacity-50 my-1"></div>
+
+                <!-- Info Message -->
+                <p class="text-[15px] font-bold text-[#0f0e17] opacity-80 leading-snug">
+                    Scan the QR code above to view all our available snacks, drinks, and their latest prices.
+                </p>
+            </div>
+
+            <!-- Print Prompt Button (Visible only on screen) -->
+            <button onclick="window.print()" class="no-print mt-8 px-8 py-3 bg-[#e53170] hover:bg-[#d42a65] text-white text-lg font-fredoka font-bold rounded-xl chiekoi-border chiekoi-shadow transition-transform active:translate-y-1 active:translate-x-1 active:shadow-none flex items-center gap-2 cursor-pointer relative z-30">
+                <svg class="w-5 h-5 stroke-current" fill="none" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                PRINT PDF
+            </button>
+
+        </div>
+    </div>
+
+</body>
+</html>

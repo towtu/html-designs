@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaPay Cartoon QR Card</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka for a playful, cartoonish look -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Force browsers to print backgrounds and colors exactly as they appear */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        /* Force portrait orientation and remove default print margins */
+        @page {
+            size: 200mm 200mm;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #4DE1C1 !important; /* Vibrant Cyan */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Comic-style Halftone / Polka Dot Background */
+        .comic-bg {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(#000000 2px, transparent 2px);
+            background-size: 24px 24px;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        /* Neo-brutalism / Cartoon Shadows */
+        .cartoon-shadow {
+            box-shadow: 8px 8px 0px 0px #000000;
+        }
+        .cartoon-shadow-sm {
+            box-shadow: 4px 4px 0px 0px #000000;
+        }
+
+        /* Dashed Line separator */
+        .dashed-divider {
+            border-top: 4px dashed #000000;
+        }
+
+        /* Print Specific Adjustments */
+        @media print {
+            body {
+                height: 100vh;
+                width: 100vw;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #4DE1C1 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            /* Keep the cartoon shadow when printing */
+            .cartoon-shadow {
+                box-shadow: 6px 6px 0px 0px #000000 !important;
+            }
+            .cartoon-shadow-sm {
+                box-shadow: 4px 4px 0px 0px #000000 !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative select-none overflow-hidden">
+
+    <!-- Comic Background Decoration -->
+    <div class="comic-bg"></div>
+
+    <!-- Decorative Cartoon Star / Burst behind the card (Removed hidden md:block so they always print) -->
+    <div class="absolute -top-10 -right-10 w-40 h-40 bg-[#FFE600] rounded-full border-[5px] border-black cartoon-shadow z-0"></div>
+    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-[#FF3366] rounded-full border-[5px] border-black cartoon-shadow z-0"></div>
+
+    <!-- Main Card Container -->
+    <div class="relative z-10 p-6 md:p-0 w-full max-w-[420px]">
+        <div class="relative bg-white rounded-[2.5rem] border-[5px] border-black cartoon-shadow p-8 flex flex-col items-center">
+            
+            <!-- 1. QR Code Section -->
+            <!-- The container has overflow-hidden so we can zoom into your screenshot -->
+            <div class="relative w-60 h-60 bg-white rounded-3xl border-[5px] border-black cartoon-shadow-sm flex items-center justify-center mb-6 overflow-hidden z-20">
+                
+                <!-- YOUR UPLOADED IMAGE -->
+                <img src="qr.jpg" 
+                     alt="My QR Code" 
+                     class="w-full h-full object-cover"
+                     style="object-position: center 26%; transform: scale(2.3); margin-top: 8px;"
+                     onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Fallback&color=000000&bgcolor=FFFFFF'; this.style.transform='scale(1)'; this.style.objectPosition='center';">
+                
+                <!-- Central InstaPay Logo Badge (Cartoonified) -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20 ">
+                    <!-- Added -translate-y-4 to nudge the badge up -->
+                    <div class="bg-white w-12 h-12 rounded-xl border-[3px] border-black cartoon-shadow-sm flex flex-col items-center justify-center transform scale-110 -translate-y-1">
+                        <div class="text-[12px] font-black tracking-tight leading-none text-[#0044B2] mb-[2px]">insta</div>
+                        <div class="flex items-center text-[15px] font-black tracking-tight leading-none text-[#E11B22]">
+                            <!-- Cartoon Red shape -->
+                            <svg class="w-4 h-4 mr-0.5" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M4 4h8a6 6 0 010 12H8v4H4V4zm4 4v4h4a2 2 0 000-4H8z"/>
+                                <path d="M8 12h4a6 6 0 006-6h-4a2 2 0 01-2 2H8v4z" opacity="0.5"/>
+                            </svg>
+                            Pay
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Subtext inside a cute pill shape -->
+            <div class="bg-[#f0f0f0] border-[3px] border-black rounded-full px-4 py-1.5 mb-6 cartoon-shadow-sm">
+                <p class="text-sm font-bold text-gray-700 tracking-wide">Transfer fees may apply!</p>
+            </div>
+
+            <!-- 3. Name (Vibrant Blue, comic drop shadow) -->
+            <h2 class="text-[26px] font-black text-[#0055ff] tracking-wide mb-5 text-center" style="text-shadow: 2px 2px 0px #000;">
+                KO*Y CH******N A.
+            </h2>
+
+            <!-- Separator Line (Chunky Dashes) -->
+            <div class="w-full dashed-divider mb-6"></div>
+
+            <!-- 4 & 5. Info Section -->
+            <div class="w-full space-y-4 z-20 bg-[#FFE600] border-[4px] border-black rounded-2xl p-4 cartoon-shadow-sm">
+                <!-- Mobile No -->
+                <div class="flex items-center justify-between">
+                    <span class="text-[14px] font-bold text-black">Mobile No.:</span>
+                    <span class="text-[20px] font-black text-black tracking-wide">09650579370</span>
+                </div>
+                
+                <!-- User ID -->
+                <div class="flex items-center justify-between">
+                    <span class="text-[14px] font-bold text-black">User ID:</span>
+                    <span class="text-[16px] font-black text-black tracking-widest">..........5OVGXY</span>
+                </div>
+            </div>
+
+            <!-- Print Prompt Button (Visible only on screen) -->
+            <button onclick="window.print()" class="no-print mt-8 px-8 py-3 bg-[#FF3366] hover:bg-[#ff1a53] text-white text-lg font-black rounded-full border-[4px] border-black cartoon-shadow transition-transform active:translate-y-1 active:translate-x-1 active:shadow-none flex items-center gap-2 cursor-pointer relative z-30">
+                <svg class="w-5 h-5 stroke-current" fill="none" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                PRINT PDF
+            </button>
+
+        </div>
+    </div>
+
+</body>
+</html>
