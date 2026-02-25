@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POCO X5 5G - Advanced Tech Manual</title>
+    <!-- Futuristic and Techy Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --poco-yellow: #FFCB05;
+            --cyber-blue: #00F0FF;
+            --alert-red: #FF2A2A;
+            --bg-dark: #070B14;
+            --bg-panel: #111827;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --grid-color: rgba(0, 240, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #222;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--text-main);
+        }
+
+        /* --- PRINT & DOWNLOAD CONTROLS --- */
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .btn-print {
+            background-color: var(--poco-yellow);
+            color: #000;
+            border: 2px solid var(--poco-yellow);
+            padding: 12px 24px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 203, 5, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .btn-print.btn-html {
+            background-color: var(--cyber-blue);
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+        .btn-print:hover {
+            background-color: transparent;
+            color: var(--poco-yellow);
+            box-shadow: inset 0 0 15px rgba(255, 203, 5, 0.4);
+        }
+        .btn-print.btn-html:hover {
+            color: var(--cyber-blue);
+            box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.4);
+        }
+        .print-note {
+            background: rgba(0,0,0,0.85);
+            color: #fff;
+            padding: 15px;
+            border-left: 3px solid var(--cyber-blue);
+            font-family: 'Share Tech Mono';
+            font-size: 12px;
+            width: 320px;
+        }
+
+        /* A4 Page Configuration - Blueprint Style */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            padding: 25mm 20mm;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        /* HUD Corners */
+        .page::before, .page::after {
+            content: ''; position: absolute; width: 30px; height: 30px; pointer-events: none;
+        }
+        .page::before {
+            top: 10mm; left: 10mm;
+            border-top: 2px solid var(--poco-yellow); border-left: 2px solid var(--poco-yellow);
+        }
+        .page::after {
+            bottom: 10mm; right: 10mm;
+            border-bottom: 2px solid var(--poco-yellow); border-right: 2px solid var(--poco-yellow);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 0;
+            text-transform: uppercase;
+        }
+
+        h1 { color: #FFF; font-size: 45px; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+        h2 { color: var(--poco-yellow); font-size: 28px; font-weight: 700; border-bottom: 1px solid rgba(255, 203, 5, 0.3); padding-bottom: 10px; margin-bottom: 25px; display: flex; align-items: center; gap: 10px;}
+        h2::before { content: '>'; color: var(--cyber-blue); }
+        h3 { color: var(--cyber-blue); font-size: 18px; font-weight: 700; margin-top: 25px; margin-bottom: 10px; letter-spacing: 1px;}
+        
+        p, li {
+            font-size: 16px;
+            line-height: 1.6;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+
+        .sys-text {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--poco-yellow);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* Cyber UI Cards */
+        .cyber-card {
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.4) 100%);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            border-left: 3px solid var(--cyber-blue);
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+        .cyber-card.alert {
+            border-left: 3px solid var(--alert-red);
+            background: linear-gradient(135deg, rgba(255, 42, 42, 0.1) 0%, rgba(17, 24, 39, 0.4) 100%);
+        }
+        .cyber-card.alert h3 { color: var(--alert-red); }
+        
+        .cyber-card.highlight {
+            border-left: 3px solid var(--poco-yellow);
+            background: linear-gradient(135deg, rgba(255, 203, 5, 0.1) 0%, rgba(17, 24, 39, 0.4) 100%);
+        }
+        .cyber-card.highlight h3 { color: var(--poco-yellow); }
+
+        /* Layout Grids */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        /* --- CSS PHONE MODEL DESIGN --- */
+        .phone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* The physical body */
+        .poco-device {
+            width: 180px;
+            height: 380px;
+            background: #0B101A;
+            border: 2px solid var(--poco-yellow);
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 203, 5, 0.1), inset 0 0 20px rgba(0,0,0,0.8);
+            z-index: 20;
+        }
+        
+        /* The camera island (Iconic POCO design) */
+        .camera-island {
+            position: absolute;
+            top: 20px; left: 10px; right: 10px;
+            height: 60px;
+            background: #1A2235;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 21;
+        }
+        
+        /* Lenses */
+        .lens-cluster {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            width: 40px;
+        }
+        .lens {
+            width: 15px; height: 15px;
+            border-radius: 50%;
+            background: #000;
+            border: 1px solid var(--cyber-blue);
+            box-shadow: inset 0 0 5px var(--cyber-blue);
+        }
+        .lens.main { width: 25px; height: 25px; grid-column: 1 / span 2; margin-bottom: -2px;}
+        
+        /* POCO Branding on phone */
+        .poco-brand {
+            font-family: 'Orbitron', sans-serif;
+            color: #444;
+            font-weight: 900;
+            font-size: 18px;
+            margin-left: auto;
+            transform: rotate(-90deg);
+            transform-origin: center right;
+            letter-spacing: 2px;
+        }
+
+        /* Screen display (for cover) */
+        .screen-ui {
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            background: linear-gradient(180deg, rgba(0,240,255,0.1) 0%, transparent 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(0,240,255,0.2);
+            display: none; /* hidden on back view */
+            z-index: 21;
+        }
+        
+        /* Show screen UI on cover */
+        .cover-page .poco-device .camera-island { display: none; }
+        .cover-page .poco-device .screen-ui { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden;
+        }
+        .fingerprint-icon {
+            width: 40px; height: 40px;
+            border: 2px dashed var(--cyber-blue);
+            border-radius: 50%;
+            margin-top: auto;
+            margin-bottom: 40px;
+            box-shadow: 0 0 15px var(--cyber-blue);
+            animation: pulse 2s infinite;
+        }
+        .punch-hole {
+            width: 8px; height: 8px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px; left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 2px rgba(255,255,255,0.5);
+        }
+
+        /* Schematic Callouts (For Specs Page) */
+        .callout {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--cyber-blue);
+            white-space: nowrap;
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);
+            z-index: 30;
+        }
+        .c-line { height: 1px; background: var(--cyber-blue); margin: 0 10px; }
+        .c-dot { width: 5px; height: 5px; background: var(--cyber-blue); border-radius: 50%; box-shadow: 0 0 8px var(--cyber-blue); flex-shrink: 0; }
+        
+        /* Anchor using Right/Left properties to pin dots perfectly on the phone */
+        .co-1 { top: 40px; right: 140px; } 
+        .co-1 .c-line { width: 80px; }
+        
+        .co-2 { top: 170px; left: 175px; } 
+        .co-2 .c-line { width: 80px; }
+
+        .co-3 { bottom: 25px; right: 90px; } 
+        .co-3 .c-line { width: 80px; }
+
+
+        /* Table of Contents */
+        .toc-list { list-style: none; padding: 0; margin-top: 30px; }
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 16px;
+        }
+        .toc-item:hover { background: rgba(0, 240, 255, 0.05); padding-left: 10px; transition: 0.2s; color: var(--poco-yellow); }
+
+        /* Footer */
+        .page-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 203, 5, 0.3);
+            padding-top: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px var(--cyber-blue); }
+            50% { box-shadow: 0 0 20px var(--cyber-blue); }
+            100% { box-shadow: 0 0 5px var(--cyber-blue); }
+        }
+
+        /* --- STRICT PDF EXPORT SETTINGS --- */
+        @page {
+            size: A4;
+            margin: 0mm; 
+        }
+        
+        @media print {
+            body { 
+                background: var(--bg-dark) !important; 
+                padding: 0; 
+                margin: 0;
+            }
+            .controls { 
+                display: none !important; 
+            }
+            .page {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 25mm 20mm;
+                border: 1px solid transparent; 
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+                overflow: hidden; 
+            }
+
+            /* FORCE the phone model to print its borders and backgrounds */
+            .poco-device { 
+                background-color: #0B101A !important; 
+                border: 2px solid #FFCB05 !important; 
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .camera-island { background-color: #1A2235 !important; border: 1px solid #444 !important; }
+            .lens { background-color: #000 !important; border: 2px solid #00F0FF !important; }
+            .screen-ui { background-color: #070B14 !important; border: 2px solid #00F0FF !important; }
+            .punch-hole { background-color: #000 !important; }
+            .c-line { background-color: transparent !important; border-top: 2px solid #00F0FF !important; }
+            .c-dot { background-color: transparent !important; border: 3px solid #00F0FF !important; box-shadow: none !important; }
+            .fingerprint-icon { border: 2px dashed #00F0FF !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THE BUTTONS YOU NEED -->
+    <div class="controls">
+        <button class="btn-print btn-html" onclick="downloadCleanHTML()">[ DOWNLOAD ANIMATED FILE ]</button>
+        <button class="btn-print" onclick="window.print()">[ EXPORT STATIC PDF ]</button>
+        <div class="print-note">
+            ⚠️ <strong>ANIMATIONS VS PDF:</strong><br><br>
+            PDFs <strong>cannot</strong> play animations. To keep the glowing effects, click <strong>"DOWNLOAD ANIMATED FILE"</strong>. This will download a clean `.html` file (without these buttons) that you can submit to your teacher!<br><br>
+            If you want a static PDF, click the yellow button and ensure <strong>"Background graphics"</strong> is checked!
+        </div>
+    </div>
+
+    <!-- PAGE 1: COVER -->
+    <div class="page cover-page">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+            <span class="sys-text">SYS.INIT // TERMINAL LOGGED IN</span>
+            <span class="sys-text" style="color: var(--cyber-blue);">DOC_TYPE: USER_SCHEMATIC</span>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <h1 style="margin-bottom: -5px; font-size: 70px;">POCO</h1>
+            <h1 style="color: var(--poco-yellow); font-size: 50px;">X5 5G</h1>
+            <div class="sys-text" style="color: var(--text-muted); margin-top: 10px;">ADVANCED OPERATIONS MANUAL & BLUEPRINT</div>
+        </div>
+
+        <!-- CSS Phone Cover Art -->
+        <div class="phone-container">
+            <div class="poco-device">
+                <div class="screen-ui">
+                    <div class="punch-hole"></div>
+                    <div style="font-family: 'Share Tech Mono'; color: var(--cyber-blue); font-size: 24px; margin-top: 80px;">12:00</div>
+                    <div style="font-family: 'Orbitron'; color: #fff; font-size: 10px; margin-top: 5px;">SYSTEM SECURED</div>
+                    <div class="fingerprint-icon"></div>
+                </div>
+            </div>
+            <!-- decorative background elements -->
+            <div style="position: absolute; width: 300px; height: 300px; border: 1px dashed rgba(0,240,255,0.2); border-radius: 50%; z-index: 1;"></div>
+            <div style="position: absolute; width: 400px; height: 400px; border: 1px solid rgba(255,203,5,0.05); border-radius: 50%; z-index: 1;"></div>
+        </div>
+
+        <div style="margin-top: auto;">
+            <div class="cyber-card highlight" style="display: flex; justify-content: space-between; align-items: flex-end; padding: 15px;">
+                <div>
+                    <span class="sys-text" style="color: var(--text-muted);">COMPILED & DESIGNED BY</span><br>
+                    <span style="font-family: 'Orbitron'; font-weight: 700; font-size: 18px; color: #fff;">Kurt Ritchie O. Atilano</span>
+                </div>
+                <div style="text-align: right;">
+                    <span class="sys-text" style="color: var(--text-muted);">VERSION</span><br>
+                    <span class="sys-text" style="font-size: 18px; color: var(--poco-yellow);">V-1.0_X5</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2: DIRECTORY / TOC -->
+    <div class="page">
+        <h2>System Directory</h2>
+        <p style="color: var(--text-muted);">Access specific operational sectors using the index below.</p>
+
+        <ul class="toc-list">
+            <li class="toc-item"><span>[01] THE POCO ARCHITECTURE</span> <span style="color: var(--poco-yellow);">PAGE_03</span></li>
+            <li class="toc-item"><span>[02] HAZARD & SAFETY PROTOCOLS</span> <span style="color: var(--poco-yellow);">PAGE_04</span></li>
+            <li class="toc-item"><span>[03] HARDWARE SCHEMATICS (SPECS)</span> <span style="color: var(--poco-yellow);">PAGE_05</span></li>
+            <li class="toc-item"><span>[04] BOOT SEQUENCE & DEPLOYMENT</span> <span style="color: var(--poco-yellow);">PAGE_06</span></li>
+            <li class="toc-item"><span>[05] INTERFACE NAVIGATION (UI)</span> <span style="color: var(--poco-yellow);">PAGE_07</span></li>
+            <li class="toc-item"><span>[06] DIAGNOSTICS & SUPPORT HUB</span> <span style="color: var(--poco-yellow);">PAGE_08</span></li>
+        </ul>
+
+        <div class="cyber-card" style="margin-top: 50px;">
+            <span class="sys-text" style="color: var(--cyber-blue);">> DATA STREAM INITIALIZED...</span><br>
+            <p style="font-size: 14px; margin-top: 10px;">Warning: Unauthorized distribution of this schematic is prohibited. For verified users only.</p>
+        </div>
+
+        <div class="page-footer">
+            <span>FILE: POCO_X5_5G_MANUAL.SYS</span>
+            <span>[ PAGE_02 ]</span>
+        </div>
+    </div>
+
+    <!-- PAGE 3: INTRODUCTION -->
+    <div class="page">
+        <h2>[01] The POCO Architecture</h2>
+        
+        <p>You are now equipped with the POCO X5 5G. This is not a standard communication device; it is a high-yield processing engine wrapped in a lightweight chassis. This document serves as your tactical operations blueprint.</p>
+
+        <div class="cyber-card highlight">
+            <h3>> MISSION OBJECTIVE</h3>
+            <p>Our objective is to bypass standard, confusing manuals. This schematic provides direct, actionable data to help you unlock the extreme potential of your hardware, ensuring maximum frame rates, battery longevity, and seamless connectivity.</p>
+        </div>
+
+        <h3>> INTENDED OPERATORS</h3>
+        <p>This guide is scaled for all user levels. Whether you are a competitive mobile gamer seeking to optimize the Snapdragon® core, or a daily navigator needing reliable 5G uplinks, the following protocols will clarify every function of the MIUI system.</p>
+
+        <div class="page-footer">
+            <span>FILE: POCO_X5_5G_MANUAL.SYS</span>
+            <span>[ PAGE_03 ]</span>
+        </div>
+    </div>
+
+    <!-- PAGE 4: SAFETY -->
+    <div class="page">
+        <h2>[02] Hazard & Safety Protocols</h2>
+        
+        <p>To ensure the survival and peak performance of your hardware, adherence to these environmental and operational parameters is mandatory.</p>
+
+        <div class="grid-2">
+            <div class="cyber-card alert">
+                <h3>> THERMAL OVERLOAD</h3>
+                <p>The Snapdragon® 695 processor generates heat under heavy processing loads. Never expose the chassis to direct solar radiation (e.g., car dashboards) for extended periods. If the core temperature exceeds safe limits, system throttling will occur.</p>
+            </div>
+            
+            <div class="cyber-card" style="border-left-color: var(--cyber-blue);">
+                <h3 style="color: var(--cyber-blue);">> INGRESS PROTECTION</h3>
+                <p>Your unit carries an IP53 rating. It is shielded against microscopic dust particles and light liquid sprays. It is <strong>NOT</strong> submersible. Complete immersion in liquids will cause catastrophic motherboard failure.</p>
+            </div>
+        </div>
+
+        <h3>> ENERGY TRANSFER (CHARGING)</h3>
+        <ul>
+            <li><strong>MANDATORY:</strong> Utilize the factory-provided 33W charging module. Unauthorized aftermarket chargers deliver unstable voltage spikes, degrading the 5000mAh cell.</li>
+            <li>Do not execute energy transfers while the device is resting on heat-insulating materials (beds, couches).</li>
+            <li>Periodically inspect the USB-C interface for debris to prevent short circuits.</li>
+        </ul>
+
+        <div class="page-footer">
+            <span>FILE: POCO_X5_5G_MANUAL.SYS</span>
+            <span>[ PAGE_04 ]</span>
+        </div>
+    </div>
+
+    <!-- PAGE 5: SCHEMATICS (CSS PHONE INCLUDED) -->
+    <div class="page">
+        <h2>[03] Hardware Schematics</h2>
+        
+        <p>Review the physical blueprint of the POCO X5 5G below to familiarize yourself with its sensory and input nodes.</p>
+
+        <!-- CSS Wireframe Phone Model -->
+        <div class="phone-container" style="margin: 60px 0;">
+            <div class="poco-device">
+                <!-- Back View Camera Island -->
+                <div class="camera-island">
+                    <div class="lens-cluster">
+                        <div class="lens main"></div>
+                        <div class="lens"></div>
+                        <div class="lens"></div>
+                    </div>
+                    <div class="poco-brand">POCO</div>
+                </div>
+
+                <!-- Callouts / Pointers -->
+                <div class="callout co-1">
+                    <span>48MP AI TRIPLE CAMERA</span>
+                    <div class="c-line"></div>
+                    <div class="c-dot"></div>
+                </div>
+
+                <div class="callout co-2">
+                    <div class="c-dot"></div>
+                    <div class="c-line"></div>
+                    <span>SIDE FINGERPRINT SCANNER</span>
+                </div>
+
+                <div class="callout co-3">
+                    <span>TYPE-C & 33W FAST CHARGE NODE</span>
+                    <div class="c-line"></div>
+                    <div class="c-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="cyber-card">
+                <h3 style="margin-top: 0;">> CORE PROCESSOR</h3>
+                <span class="sys-text">CHIPSET: SNAPDRAGON 695 5G</span><br>
+                <p style="font-size: 14px;">Built on a 6nm architecture, delivering hyper-fast 5G speeds and flawless gaming rendering.</p>
+            </div>
+            <div class="cyber-card">
+                <h3 style="margin-top: 0;">> DISPLAY MATRIX</h3>
+                <span class="sys-text">PANEL: 6.67" 120Hz AMOLED</span><br>
+                <p style="font-size: 14px;">Outputs deep blacks and vibrant colors with an ultra-fluid 120Hz refresh rate.</p>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>FILE: POCO_X5_5G_MANUAL.SYS</span>
+            <span>[ PAGE_05 ]</span>
+        </div>
+    </div>
+
+    <!-- PAGE 6: SETUP -->
+    <div class="page">
+        <h2>[04] Boot Sequence & Deployment</h2>
+        
+        <p>Follow this exact initialization sequence to bring your POCO X5 5G online securely.</p>
+
+        <div class="cyber-card">
+            <h3 style="margin-top: 0;">STEP_01: HARDWARE INSERTION</h3>
+            <p>Locate the SIM access port on the side of the chassis. Insert the metallic eject tool. Extract the tray and mount your 5G Nano-SIM. The hybrid slot also accepts a MicroSD card for up to 1TB of expanded data storage.</p>
+        </div>
+
+        <div class="cyber-card">
+            <h3 style="margin-top: 0;">STEP_02: IGNITION</h3>
+            <p>Press and hold the lateral Power Node for exactly 3 seconds. Release upon haptic feedback. The POCO logo will illuminate, signaling the bootloader sequence.</p>
+        </div>
+
+        <div class="cyber-card highlight">
+            <h3 style="margin-top: 0;">STEP_03: SYSTEM CONFIGURATION</h3>
+            <ul>
+                <li><strong>UPLINK:</strong> Connect to a secure Wi-Fi node to download initial firmware patches.</li>
+                <li><strong>SECURITY:</strong> Register your biometrics immediately. Scan your thumb on the side-mounted power button, and map your face for AI Face Unlock.</li>
+                <li><strong>DATA CLONE:</strong> Use the on-screen migration tool to pull data from your obsolete device.</li>
+            </ul>
+        </div>
+
+        <div class="page-footer">
+            <span>FILE: POCO_X5_5G_MANUAL.SYS</span>
+            <span>[ PAGE_06 ]</span>
+        </div>
+    </div>
+
+    <!-- PAGE 7: UI / GESTURES -->
+    <div class="page">
+        <h2>[05] Interface Navigation</h2>
+        
+        <p>The POCO X5 5G runs on a highly optimized version of MIUI. Standard navigation buttons are obsolete; engage Gestures for maximum efficiency.</p>
+
+        <div class="grid-2">
+            <div class="cyber-card">
+                <h3 style="margin-top: 0;">> GESTURE CONTROLS</h3>
+                <p>Activate via: <span class="sys-text">Settings > System Navigation > Gestures</span></p>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>Return Home:</strong> Swipe up from bottom.</li>
+                    <li><strong>Back:</strong> Swipe inward from left/right edges.</li>
+                    <li><strong>Task Manager:</strong> Swipe up and hold.</li>
+                </ul>
+            </div>
+            
+            <div class="cyber-card">
+                <h3 style="margin-top: 0;">> COMMAND CENTER</h3>
+                <p>MIUI splits alerts and tools.</p>
+                <ul style="margin-bottom: 0;">
+                    <li>Swipe down from <strong>Top Right</strong>: Access system toggles (Wi-Fi, Bluetooth).</li>
+                    <li>Swipe down from <strong>Top Left</strong>: Access incoming communications.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cyber-card highlight">
+            <h3 style="margin-top: 0;">> GAME TURBO PROTOCOL</h3>
+            <p>When launching high-stress applications (games), the system automatically triggers <strong>Game Turbo</strong>. Swipe the translucent tab at the top edge of your screen to open the tactical overlay. Use this to clear background RAM, block incoming calls, and boost CPU allocation instantly.</p>
+        </div>
+
+        <div class="page-footer">
+            <span>FILE: POCO_X5_5G_MANUAL.SYS</span>
+            <span>[ PAGE_07 ]</span>
+        </div>
+    </div>
+
+    <!-- PAGE 8: MAINTENANCE & CONTACT -->
+    <div class="page">
+        <h2>[06] Diagnostics & Support Hub</h2>
+        
+        <p>Execute these routine maintenance protocols to prevent system degradation over time.</p>
+
+        <h3>> FIELD TROUBLESHOOTING</h3>
+        <ul>
+            <li><strong>SYSTEM FREEZE:</strong> Force a hard reset by depressing the Power Button for 15 seconds. This flushes the RAM without data loss.</li>
+            <li><strong>POWER DRAIN:</strong> Navigate to the "Security" app and run a Battery Scan. Close latent applications draining power in the background.</li>
+            <li><strong>SOFTWARE ANOMALIES:</strong> Ensure your MIUI version is fully patched via Settings > About Phone.</li>
+        </ul>
+
+        <!-- Custom Location Included Here -->
+        <div class="cyber-card highlight" style="margin-top: 40px; text-align: center; border-left: none; border-bottom: 3px solid var(--poco-yellow);">
+            <h3 style="margin-top: 0;">> OFFICIAL REGIONAL SUPPORT</h3>
+            <p>If hardware failure occurs, do not attempt unauthorized disassembly. Route your unit to our certified technicians.</p>
+            
+            <div style="font-family: 'Share Tech Mono', monospace; font-size: 16px; margin-top: 20px;">
+                <p style="color: var(--poco-yellow);">GPQX+WQR</p>
+                <p><strong>J.P RIZAL ST. TAGOLOAN MIS OR.</strong></p>
+                <p style="color: var(--text-muted); font-size: 14px;">COMMS: support.ph@poco.global<br>UPTIME: MON-SAT / 0900-1800 HRS</p>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>FILE: POCO_X5_5G_MANUAL.SYS</span>
+            <span>[ PAGE_08 // END OF TRANSMISSION ]</span>
+        </div>
+    </div>
+
+    <!-- Script to download a CLEAN interactive HTML file -->
+    <script>
+        function downloadCleanHTML() {
+            // Clone the whole document
+            let clone = document.documentElement.cloneNode(true);
+            
+            // REMOVE the buttons from the cloned file so the teacher doesn't see them!
+            let controls = clone.querySelector('.controls');
+            if(controls) {
+                controls.remove();
+            }
+
+            // Create the HTML file text
+            let htmlContent = "<!DOCTYPE html>\n" + clone.outerHTML;
+            
+            // Download the file
+            let blob = new Blob([htmlContent], { type: 'text/html' });
+            let a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'POCO_X5_5G_Animated_Manual.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
